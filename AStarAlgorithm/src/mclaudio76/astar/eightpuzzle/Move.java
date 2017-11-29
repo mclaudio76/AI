@@ -2,7 +2,7 @@ package mclaudio76.astar.eightpuzzle;
 
 import mclaudio76.astar.StateTransition;
 
-public class Move implements StateTransition {
+public class Move extends StateTransition {
 	private Tile from;
 	private Tile to;
 	
@@ -12,7 +12,7 @@ public class Move implements StateTransition {
 	}
 	
 	public String toString() {
-		return "Move tile "+from+ " to tile "+to;
+		return "Move tile  "+from+ " to tile "+to;
 	}
 
 	public Tile getFrom() {
