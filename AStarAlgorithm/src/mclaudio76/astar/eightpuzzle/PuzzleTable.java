@@ -12,7 +12,7 @@ import mclaudio76.astar.StateTransition;
 public class PuzzleTable extends State {
 	
 	private Tile[] tiles;
-	private int squareDim		= 0;
+	private int squareDim  		= 0;
 	private String stringState  = "";
 	private State parent        = null;
 	private double gCost, hCost = 0.0;
