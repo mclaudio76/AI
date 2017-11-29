@@ -1,5 +1,10 @@
 package mclaudio76.astar;
 
-public interface StateTransition {
-	public double getCost();
+/***
+ * 
+ * @author mauri
+ *
+ */
+public abstract class StateTransition {
+	public abstract double getCost();
 }
