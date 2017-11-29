@@ -9,7 +9,7 @@ import java.util.List;
 import mclaudio76.astar.eightpuzzle.PuzzleTable;
 import mclaudio76.astar.eightpuzzle.Tile;
 
-public class Solver<S extends State> {
+public class AStarSolver<S extends State> {
 	
 	private State initialState 					= null;
 	private State goal		   					= null;
@@ -20,7 +20,7 @@ public class Solver<S extends State> {
 	private List<State>  closedList		 = new ArrayList<>();
 	private List<State>  openList		 = new ArrayList<>(); 
 	
-	public Solver(State initialState, State goal, Heuristic<State> h) {
+	public AStarSolver(State initialState, State goal, Heuristic<State> h) {
 		this.initialState = initialState.copy();
 		this.goal		  = goal.copy();
 		this.h		 	  = h;
@@ -122,7 +122,7 @@ public class Solver<S extends State> {
 		
 		for(int x = 0; x < 10; x++) {
 			PuzzleTable start		   = PuzzleTable.generateRandom(goal,100);
-			Solver solver 			   = new Solver(start, goal, h);
+			AStarSolver solver 			   = new AStarSolver(start, goal, h);
 			long startTime			   = System.currentTimeMillis();
 			List<StateTransition> solution = solver.solve();
 			long endTime			   = System.currentTimeMillis();
