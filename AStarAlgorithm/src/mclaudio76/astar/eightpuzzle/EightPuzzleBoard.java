@@ -9,7 +9,7 @@ import java.util.List;
 import mclaudio76.astar.State;
 import mclaudio76.astar.StateTransition;
 
-public class PuzzleTable extends State {
+public class EightPuzzleBoard extends State {
 	
 	private Tile[] tiles;
 	private int squareDim  		= 0;
@@ -19,7 +19,7 @@ public class PuzzleTable extends State {
 	
 	private StateTransition transitionFromParent = null;
 	
-	public PuzzleTable(int dimension) {
+	private EightPuzzleBoard(int dimension) {
 		this.squareDim  = dimension;
 		int  seed		= (int) (Math.random() * (squareDim * squareDim));
 		int  step		= squareDim;
@@ -36,7 +36,7 @@ public class PuzzleTable extends State {
 		}
 	}
 	
-	public PuzzleTable(PuzzleTable t) {
+	public EightPuzzleBoard(EightPuzzleBoard t) {
 		this.squareDim = t.squareDim;
 		this.tiles = new Tile[t.tiles.length];
 		int index  = 0;
@@ -48,13 +48,16 @@ public class PuzzleTable extends State {
 	
 	
 	
-	public PuzzleTable(Tile ... tiles) {
+	public EightPuzzleBoard(Tile ... tiles) {
 		squareDim  = (int) Math.sqrt((double)tiles.length);
 		this.tiles = new Tile[tiles.length];
 		System.arraycopy(tiles, 0, this.tiles, 0, tiles.length);
 	}
 	
-	public double manhattanDistance(PuzzleTable table) {
+	
+	
+	
+	public double manhattanDistance(EightPuzzleBoard table) {
 		double dist = 0.0;
 		for(Tile alfa : tiles) {
 			if(!alfa.isEmpty()) {
@@ -71,7 +74,7 @@ public class PuzzleTable extends State {
 	@Override
 	public State apply(StateTransition t) {
 		Move move = (Move) t;
-		PuzzleTable newState = new PuzzleTable(this);
+		EightPuzzleBoard newState = new EightPuzzleBoard(this);
 		// Swaps values
 	    Tile from   = newState.getTile(move.getFrom());
 	    Tile to     = newState.getTile(move.getTo());
@@ -169,10 +172,10 @@ public class PuzzleTable extends State {
 
 	@Override
 	public State copy() {
-		return new PuzzleTable(this);
+		return new EightPuzzleBoard(this);
 	}
 	
-	public int countInversionWithRespect(PuzzleTable anotherState) {
+	public int countInversionWithRespect(EightPuzzleBoard anotherState) {
 		int a1[] = toIntArray();
 		int inversion = 0;
 		for(int x = 0; x < a1.length-1; x++) {
@@ -203,7 +206,7 @@ public class PuzzleTable extends State {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PuzzleTable other = (PuzzleTable) obj;
+		EightPuzzleBoard other = (EightPuzzleBoard) obj;
 		if (internalState() == null) {
 			if (other.internalState() != null)
 				return false;
@@ -224,8 +227,8 @@ public class PuzzleTable extends State {
 	}
 
 	
-	public static PuzzleTable generateRandom(PuzzleTable s, int r) {
-		PuzzleTable start = new PuzzleTable(s);
+	public static EightPuzzleBoard generateRandomInitialState(EightPuzzleBoard s, int r) {
+		EightPuzzleBoard start = new EightPuzzleBoard(s);
 		int indexes   = 0;
 		while(indexes++ < r) {
 			List<StateTransition> states = start.potentialTransitions();
@@ -260,7 +263,7 @@ public class PuzzleTable extends State {
 				}
 			}
 			if(target != null) {
-				start = (PuzzleTable) start.apply(target);
+				start = (EightPuzzleBoard) start.apply(target);
 			}
 		}
 		return start;
