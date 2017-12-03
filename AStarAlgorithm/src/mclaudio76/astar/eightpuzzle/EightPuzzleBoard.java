@@ -19,7 +19,7 @@ public class EightPuzzleBoard extends State {
 	
 	private StateTransition transitionFromParent = null;
 	
-	private EightPuzzleBoard(int dimension) {
+	/*private EightPuzzleBoard(int dimension) {
 		this.squareDim  = dimension;
 		int  seed		= (int) (Math.random() * (squareDim * squareDim));
 		int  step		= squareDim;
@@ -34,7 +34,7 @@ public class EightPuzzleBoard extends State {
 				seed = actual;
 			}
 		}
-	}
+	}*/
 	
 	public EightPuzzleBoard(EightPuzzleBoard t) {
 		this.squareDim = t.squareDim;
@@ -227,8 +227,8 @@ public class EightPuzzleBoard extends State {
 	}
 
 	
-	public static EightPuzzleBoard generateRandomInitialState(EightPuzzleBoard s, int r) {
-		EightPuzzleBoard start = new EightPuzzleBoard(s);
+	public static EightPuzzleBoard generateRandomInitialState(EightPuzzleBoard initialConfiguration, int r) {
+		EightPuzzleBoard start = new EightPuzzleBoard(initialConfiguration);
 		int indexes   = 0;
 		while(indexes++ < r) {
 			List<StateTransition> states = start.potentialTransitions();
