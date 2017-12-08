@@ -1,12 +1,12 @@
 package mclaudio76.astar.eightpuzzle;
 
-import mclaudio76.astar.StateTransition;
+import mclaudio76.astar.Move;
 
-public class Move extends StateTransition {
+public class TileMove extends Move {
 	private Tile from;
 	private Tile to;
 	
-	public Move(Tile from, Tile to) {
+	public TileMove(Tile from, Tile to) {
 		this.from = from;
 		this.to   = to;
 	}

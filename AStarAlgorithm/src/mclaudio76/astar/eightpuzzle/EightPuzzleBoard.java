@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import mclaudio76.astar.State;
-import mclaudio76.astar.StateTransition;
+import mclaudio76.astar.Move;
 
 public class EightPuzzleBoard extends State {
 	
@@ -17,7 +17,7 @@ public class EightPuzzleBoard extends State {
 	private State parent        = null;
 	private double gCost, hCost = 0.0;
 	
-	private StateTransition transitionFromParent = null;
+	private Move transitionFromParent = null;
 	
 	/*private EightPuzzleBoard(int dimension) {
 		this.squareDim  = dimension;
@@ -72,8 +72,8 @@ public class EightPuzzleBoard extends State {
 	
 	
 	@Override
-	public State apply(StateTransition t) {
-		Move move = (Move) t;
+	public State apply(Move t) {
+		TileMove move = (TileMove) t;
 		EightPuzzleBoard newState = new EightPuzzleBoard(this);
 		// Swaps values
 	    Tile from   = newState.getTile(move.getFrom());
@@ -147,8 +147,8 @@ public class EightPuzzleBoard extends State {
 
 
 	@Override
-	public List<StateTransition> potentialTransitions() {
-		List<StateTransition> potential = new ArrayList<StateTransition>();
+	public List<Move> potentialTransitions() {
+		List<Move> potential = new ArrayList<Move>();
 		Tile blankTile = getTileByVal(0);
 		Tile up  	= getTileAt(blankTile.getX(),   blankTile.getY()-1);
 		Tile down  	= getTileAt(blankTile.getX(),   blankTile.getY()+1);
@@ -156,16 +156,16 @@ public class EightPuzzleBoard extends State {
 		Tile right  = getTileAt(blankTile.getX()+1, blankTile.getY());
 		
 		if(up != null) {
-			potential.add(new Move(up,blankTile));
+			potential.add(new TileMove(up,blankTile));
 		}
 		if(down != null) {
-			potential.add(new Move(down,blankTile));
+			potential.add(new TileMove(down,blankTile));
 		}
 		if(left != null) {
-			potential.add(new Move(left,blankTile));
+			potential.add(new TileMove(left,blankTile));
 		}
 		if(right != null) {
-			potential.add(new Move(right,blankTile));
+			potential.add(new TileMove(right,blankTile));
 		}
 		return potential;
 	}
@@ -231,9 +231,9 @@ public class EightPuzzleBoard extends State {
 		EightPuzzleBoard start = new EightPuzzleBoard(initialConfiguration);
 		int indexes   = 0;
 		while(indexes++ < r) {
-			List<StateTransition> states = start.potentialTransitions();
+			List<Move> states = start.potentialTransitions();
 			double rand = Math.random();
-			StateTransition target = null;
+			Move target = null;
 			if(states.size() == 2) {
 				target  =  rand < 0.5 ? states.get(0) : states.get(1);
 			}
@@ -283,12 +283,12 @@ public class EightPuzzleBoard extends State {
 	}
 
 	@Override
-	public StateTransition getTransitionFromParent() {
+	public Move getTransitionFromParent() {
 		return transitionFromParent;
 	}
 
 	@Override
-	public void setTransitionFromParent(StateTransition st) {
+	public void setTransitionFromParent(Move st) {
 		this.transitionFromParent = st;
 	}
 

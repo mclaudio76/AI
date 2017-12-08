@@ -5,15 +5,15 @@ import java.util.List;
 public abstract class State {
 
 	
-	public abstract State apply(StateTransition t);
-	public abstract List<StateTransition> potentialTransitions(); 
+	public abstract State apply(Move t);
+	public abstract List<Move> potentialTransitions(); 
 	
 	
 	public abstract State getParent();
 	public abstract void  setParent(State parent);
 	
-	public abstract StateTransition getTransitionFromParent();
-	public abstract void setTransitionFromParent(StateTransition st);
+	public abstract Move getTransitionFromParent();
+	public abstract void setTransitionFromParent(Move st);
 	
 	public abstract double getGCost();
 	public abstract double getHCost();
