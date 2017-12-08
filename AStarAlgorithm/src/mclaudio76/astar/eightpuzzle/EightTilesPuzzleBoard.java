@@ -6,9 +6,9 @@ import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
 import mclaudio76.astar.State;
-import mclaudio76.astar.StateChange;
+import mclaudio76.astar.StateTransition;
 
-public class EnhEightPuzzleBoard  extends State {
+public class EightTilesPuzzleBoard  extends State {
 	private int[] innerData		= null;
 	private String stringState  = "";
 	private int   boardSize		= 0;
@@ -16,15 +16,15 @@ public class EnhEightPuzzleBoard  extends State {
 	private State parent        = null;
 	private double gCost, hCost = 0.0;
 	
-	private StateChange transitionFromParent = null;
+	private StateTransition transitionFromParent = null;
 	
 	
-	public EnhEightPuzzleBoard(EnhEightPuzzleBoard t) {
+	public EightTilesPuzzleBoard(EightTilesPuzzleBoard t) {
 		 this(t.innerData);
 	}
 	
 	
-	public EnhEightPuzzleBoard(int ... values) {
+	public EightTilesPuzzleBoard(int ... values) {
 		this.innerData = new  int[values.length];
 		this.boardSize = (int) Math.sqrt(values.length);
 		stringState	   = "";
@@ -43,7 +43,7 @@ public class EnhEightPuzzleBoard  extends State {
 	}
 	
 	
-	public double manhattanDistance(EnhEightPuzzleBoard table) {
+	public double manhattanDistance(EightTilesPuzzleBoard table) {
 		double dist = 0.0;
 		for(int index = 0; index < innerData.length; index++) {
 			 Tile alfa = getTileByIndex(index);
@@ -59,9 +59,9 @@ public class EnhEightPuzzleBoard  extends State {
 	
 	
 	@Override
-	public State apply(StateChange t) {
+	public State nextState(StateTransition t) {
 		TileMove move = (TileMove) t;
-		EnhEightPuzzleBoard newState = new EnhEightPuzzleBoard(this);
+		EightTilesPuzzleBoard newState = new EightTilesPuzzleBoard(this);
 		// Swaps values
 	    int valueFrom   = newState.getValueAt(move.getFrom());
 	    int valueTo     = newState.getValueAt(move.getTo());
@@ -134,8 +134,8 @@ public class EnhEightPuzzleBoard  extends State {
 
 
 	@Override
-	public List<StateChange> potentialTransitions() {
-		List<StateChange> potential = new ArrayList<StateChange>();
+	public List<StateTransition> potentialTransitions() {
+		List<StateTransition> potential = new ArrayList<StateTransition>();
 		Tile blankTile = getTileByVal(0);
 		Tile up  	= getTileAt(blankTile.getX(),   blankTile.getY()-1);
 		Tile down  	= getTileAt(blankTile.getX(),   blankTile.getY()+1);
@@ -159,20 +159,20 @@ public class EnhEightPuzzleBoard  extends State {
 
 	@Override
 	public State copy() {
-		return new EnhEightPuzzleBoard(this);
+		return new EightTilesPuzzleBoard(this);
 	}
 	
 
 	
 	
 	
-	public static EnhEightPuzzleBoard generateRandomInitialState(EnhEightPuzzleBoard initialConfiguration, int r) {
-		EnhEightPuzzleBoard start = new EnhEightPuzzleBoard(initialConfiguration);
+	public static EightTilesPuzzleBoard generateRandomInitialState(EightTilesPuzzleBoard initialConfiguration, int r) {
+		EightTilesPuzzleBoard start = new EightTilesPuzzleBoard(initialConfiguration);
 		int indexes   = 0;
 		while(indexes++ < r) {
-			List<StateChange> states = start.potentialTransitions();
+			List<StateTransition> states = start.potentialTransitions();
 			double rand 				 = Math.random();
-			StateChange target = null;
+			StateTransition target = null;
 			if(states.size() == 2) {
 				target  =  rand < 0.5 ? states.get(0) : states.get(1);
 			}
@@ -202,7 +202,7 @@ public class EnhEightPuzzleBoard  extends State {
 				}
 			}
 			if(target != null) {
-				start = (EnhEightPuzzleBoard) start.apply(target);
+				start = (EightTilesPuzzleBoard) start.nextState(target);
 			}
 		}
 		return start;
@@ -212,22 +212,22 @@ public class EnhEightPuzzleBoard  extends State {
 	
 	
 	@Override
-	public State getParent() {
+	public State getOrigin() {
 		return parent;
 	}
 
 	@Override
-	public void setParent(State parent) {
+	public void setOrigin(State parent) {
 		this.parent = parent;
 	}
 
 	@Override
-	public StateChange getTransitionFromParent() {
+	public StateTransition getTransitionFromOrigin() {
 		return transitionFromParent;
 	}
 
 	@Override
-	public void setTransitionFromParent(StateChange st) {
+	public void setTransitionFromOrigin(StateTransition st) {
 		this.transitionFromParent = st;
 	}
 
@@ -251,11 +251,7 @@ public class EnhEightPuzzleBoard  extends State {
 		this.hCost = d;
 	}
 
-	@Override
-	public String innerCode() {
-		return stringState;
-	}
-
+	
 
 	@Override
 	public int hashCode() {
@@ -274,7 +270,7 @@ public class EnhEightPuzzleBoard  extends State {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EnhEightPuzzleBoard other = (EnhEightPuzzleBoard) obj;
+		EightTilesPuzzleBoard other = (EightTilesPuzzleBoard) obj;
 		if (stringState == null) {
 			if (other.stringState != null)
 				return false;

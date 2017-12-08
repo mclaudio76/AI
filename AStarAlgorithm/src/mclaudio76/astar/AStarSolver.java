@@ -22,8 +22,8 @@ public class AStarSolver<S extends State> {
 		this.heuristic	  = heuristic;
 	}
 	
-	public List<StateChange> solve() {
-		List<StateChange> steps = new ArrayList<>();
+	public List<StateTransition> solve() {
+		List<StateTransition> steps = new ArrayList<>();
 		State solution = innerSolve();
 		if(solution == null) {
 			return null;
@@ -31,8 +31,8 @@ public class AStarSolver<S extends State> {
 		// Find root
 		State current =  solution;
 		while(current != null) {
-			steps.add(current.getTransitionFromParent());
-			current = current.getParent();
+			steps.add(current.getTransitionFromOrigin());
+			current = current.getOrigin();
 		}
 		Collections.reverse(steps);
 		return steps;
@@ -52,8 +52,8 @@ public class AStarSolver<S extends State> {
 			else {
 				openList.remove(currentSolution);
 				closedList.add(currentSolution);
-				for(StateChange nextStep : currentSolution.potentialTransitions()) {
-					S newState = (S) currentSolution.apply(nextStep);
+				for(StateTransition nextStep : currentSolution.potentialTransitions()) {
+					S newState = (S) currentSolution.nextState(nextStep);
 					double cost = currentSolution.getGCost() + nextStep.getCost();
 					if(openList.contains(newState)) {
 						double gCost = openList.get(openList.indexOf(newState)).getGCost();
@@ -68,8 +68,8 @@ public class AStarSolver<S extends State> {
 						}
 					}
 					if(!openList.contains(newState) && !closedList.contains(newState)) {
-						newState.setParent(currentSolution);
-						newState.setTransitionFromParent(nextStep);
+						newState.setOrigin(currentSolution);
+						newState.setTransitionFromOrigin(nextStep);
 						newState.setGCost(cost);
 						newState.setHCost(heuristic.evaluate(newState, goal));
 						openList.add(newState);

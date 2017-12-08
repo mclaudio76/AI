@@ -4,10 +4,10 @@ import java.util.List;
 
 import mclaudio76.astar.AStarSolver;
 import mclaudio76.astar.Heuristic;
-import mclaudio76.astar.StateChange;
-import mclaudio76.astar.eightpuzzle.EnhEightPuzzleBoard;
+import mclaudio76.astar.StateTransition;
+import mclaudio76.astar.eightpuzzle.EightTilesPuzzleBoard;
 
-public class EightPuzzleSolver {
+public class EightTilesPuzzleSolver {
 	public static void main(String[] args) {
 		/*Heuristic<EightPuzzleBoard> h = (EightPuzzleBoard a, EightPuzzleBoard b) -> a.manhattanDistance(b);
 		EightPuzzleBoard goal  = new EightPuzzleBoard(new Tile(0,0,0), new Tile(1,0,1), new Tile(2,0,2), 
@@ -22,14 +22,14 @@ public class EightPuzzleSolver {
 			System.out.println("Solution found in "+solution.size()+" steps in "+(endTime-startTime)+" msec ");
 		} */
 		
-		EnhEightPuzzleBoard goal  = new EnhEightPuzzleBoard(1,2,3,4,5,6,7,8,0);
-		Heuristic<EnhEightPuzzleBoard> h = (EnhEightPuzzleBoard a, EnhEightPuzzleBoard b) -> a.manhattanDistance(b);
+		EightTilesPuzzleBoard goal  = new EightTilesPuzzleBoard(1,2,3,4,5,6,7,8,0);
+		Heuristic<EightTilesPuzzleBoard> h = (EightTilesPuzzleBoard a, EightTilesPuzzleBoard b) -> a.manhattanDistance(b);
 		
 		for(int x = 0; x < 10; x++) {
-			EnhEightPuzzleBoard start = EnhEightPuzzleBoard.generateRandomInitialState(goal, 100);
-			AStarSolver<EnhEightPuzzleBoard> solver 			   = new AStarSolver<EnhEightPuzzleBoard>(start, goal, h);
+			EightTilesPuzzleBoard start = EightTilesPuzzleBoard.generateRandomInitialState(goal, 100);
+			AStarSolver<EightTilesPuzzleBoard> solver 			   = new AStarSolver<EightTilesPuzzleBoard>(start, goal, h);
 			long startTime			   = System.currentTimeMillis();
-			List<StateChange> solution = solver.solve();
+			List<StateTransition> solution = solver.solve();
 			long endTime			   = System.currentTimeMillis();
 			System.out.println("Solution found in "+solution.size()+" steps in "+(endTime-startTime)+" msec ");
 		}
