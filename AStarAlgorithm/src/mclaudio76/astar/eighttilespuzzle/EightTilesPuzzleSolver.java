@@ -19,6 +19,5 @@ public class EightTilesPuzzleSolver {
 			long endTime			   = System.currentTimeMillis();
 			System.out.println("Solution found in "+solution.size()+" steps in "+(endTime-startTime)+" msec ");
 		}
-		
 	}
 }

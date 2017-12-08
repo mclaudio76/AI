@@ -13,12 +13,6 @@ public class EightTilesPuzzleBoard  extends State {
 	private String stringState  = "";
 	private int   boardSize		= 0;
 	
-	private State parent        = null;
-	private double gCost, hCost = 0.0;
-	
-	private StateTransition transitionFromParent = null;
-	
-	
 	public EightTilesPuzzleBoard(EightTilesPuzzleBoard t) {
 		 this(t.innerData);
 	}
@@ -157,14 +151,12 @@ public class EightTilesPuzzleBoard  extends State {
 		return potential;
 	}
 
-	@Override
+	/*@Override
 	public State copy() {
 		return new EightTilesPuzzleBoard(this);
-	}
+	} */
 	
 
-	
-	
 	
 	public static EightTilesPuzzleBoard generateRandomInitialState(EightTilesPuzzleBoard initialConfiguration, int r) {
 		EightTilesPuzzleBoard start = new EightTilesPuzzleBoard(initialConfiguration);
@@ -211,46 +203,7 @@ public class EightTilesPuzzleBoard  extends State {
 	
 	
 	
-	@Override
-	public State getOrigin() {
-		return parent;
-	}
-
-	@Override
-	public void setOrigin(State parent) {
-		this.parent = parent;
-	}
-
-	@Override
-	public StateTransition getTransitionFromOrigin() {
-		return transitionFromParent;
-	}
-
-	@Override
-	public void setTransitionFromOrigin(StateTransition st) {
-		this.transitionFromParent = st;
-	}
-
-	@Override
-	public double getGCost() {
-		return gCost;
-	}
-
-	@Override
-	public double getHCost() {
-		return hCost;
-	}
-
-	@Override
-	public void setGCost(double d) {
-		this.gCost = d;		
-	}
-
-	@Override
-	public void setHCost(double d) {
-		this.hCost = d;
-	}
-
+	
 	
 
 	@Override
@@ -277,6 +230,12 @@ public class EightTilesPuzzleBoard  extends State {
 		} else if (!stringState.equals(other.stringState))
 			return false;
 		return true;
+	}
+
+
+	@Override
+	public boolean goalAchieved(State goalState) {
+		return this.equals(goalState);
 	}
 
 

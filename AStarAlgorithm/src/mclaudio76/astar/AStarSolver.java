@@ -17,8 +17,8 @@ public class AStarSolver<S extends State> {
 	private List<S>  openList		 		= new ArrayList<>(); 
 	
 	public AStarSolver(S initialState, S goal, Heuristic<S> heuristic) {
-		this.initialState = (S) initialState.copy();
-		this.goal		  = (S) goal.copy();
+		this.initialState = (S) initialState;
+		this.goal		  = (S) goal;
 		this.heuristic	  = heuristic;
 	}
 	
@@ -46,7 +46,7 @@ public class AStarSolver<S extends State> {
 			if(currentSolution == null) {
 				return null;
 			}
-			if(currentSolution.equals(goal)) {
+			if(currentSolution.goalAchieved(goal)) {
 				return currentSolution;
 			}
 			else {
