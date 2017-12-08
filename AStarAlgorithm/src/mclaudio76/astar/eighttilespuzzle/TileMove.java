@@ -1,4 +1,4 @@
-package mclaudio76.astar.eightpuzzle;
+package mclaudio76.astar.eighttilespuzzle;
 
 import mclaudio76.astar.StateTransition;
 

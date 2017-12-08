@@ -1,4 +1,4 @@
-package mclaudio76.astar.eightpuzzle;
+package mclaudio76.astar.eighttilespuzzle;
 
 public class Tile {
 	private int x = 0;

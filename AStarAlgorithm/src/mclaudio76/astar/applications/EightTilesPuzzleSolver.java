@@ -5,7 +5,7 @@ import java.util.List;
 import mclaudio76.astar.AStarSolver;
 import mclaudio76.astar.Heuristic;
 import mclaudio76.astar.StateTransition;
-import mclaudio76.astar.eightpuzzle.EightTilesPuzzleBoard;
+import mclaudio76.astar.eighttilespuzzle.EightTilesPuzzleBoard;
 
 public class EightTilesPuzzleSolver {
 	public static void main(String[] args) {

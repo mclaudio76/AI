@@ -1,4 +1,4 @@
-package mclaudio76.astar.eightpuzzle;
+package mclaudio76.astar.eighttilespuzzle;
 
 import java.util.ArrayList;
 import java.util.List;
