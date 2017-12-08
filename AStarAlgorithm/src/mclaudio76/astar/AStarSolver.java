@@ -22,8 +22,8 @@ public class AStarSolver<S extends State> {
 		this.heuristic	  = heuristic;
 	}
 	
-	public List<Move> solve() {
-		List<Move> steps = new ArrayList<>();
+	public List<StateChange> solve() {
+		List<StateChange> steps = new ArrayList<>();
 		State solution = innerSolve();
 		if(solution == null) {
 			return null;
@@ -52,7 +52,7 @@ public class AStarSolver<S extends State> {
 			else {
 				openList.remove(currentSolution);
 				closedList.add(currentSolution);
-				for(Move nextStep : currentSolution.potentialTransitions()) {
+				for(StateChange nextStep : currentSolution.potentialTransitions()) {
 					S newState = (S) currentSolution.apply(nextStep);
 					double cost = currentSolution.getGCost() + nextStep.getCost();
 					if(openList.contains(newState)) {

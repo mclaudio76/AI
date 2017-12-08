@@ -6,7 +6,7 @@ import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
 import mclaudio76.astar.State;
-import mclaudio76.astar.Move;
+import mclaudio76.astar.StateChange;
 
 public class EnhEightPuzzleBoard  extends State {
 	private int[] innerData		= null;
@@ -16,7 +16,7 @@ public class EnhEightPuzzleBoard  extends State {
 	private State parent        = null;
 	private double gCost, hCost = 0.0;
 	
-	private Move transitionFromParent = null;
+	private StateChange transitionFromParent = null;
 	
 	
 	public EnhEightPuzzleBoard(EnhEightPuzzleBoard t) {
@@ -59,7 +59,7 @@ public class EnhEightPuzzleBoard  extends State {
 	
 	
 	@Override
-	public State apply(Move t) {
+	public State apply(StateChange t) {
 		TileMove move = (TileMove) t;
 		EnhEightPuzzleBoard newState = new EnhEightPuzzleBoard(this);
 		// Swaps values
@@ -134,8 +134,8 @@ public class EnhEightPuzzleBoard  extends State {
 
 
 	@Override
-	public List<Move> potentialTransitions() {
-		List<Move> potential = new ArrayList<Move>();
+	public List<StateChange> potentialTransitions() {
+		List<StateChange> potential = new ArrayList<StateChange>();
 		Tile blankTile = getTileByVal(0);
 		Tile up  	= getTileAt(blankTile.getX(),   blankTile.getY()-1);
 		Tile down  	= getTileAt(blankTile.getX(),   blankTile.getY()+1);
@@ -170,9 +170,9 @@ public class EnhEightPuzzleBoard  extends State {
 		EnhEightPuzzleBoard start = new EnhEightPuzzleBoard(initialConfiguration);
 		int indexes   = 0;
 		while(indexes++ < r) {
-			List<Move> states = start.potentialTransitions();
+			List<StateChange> states = start.potentialTransitions();
 			double rand 				 = Math.random();
-			Move target = null;
+			StateChange target = null;
 			if(states.size() == 2) {
 				target  =  rand < 0.5 ? states.get(0) : states.get(1);
 			}
@@ -222,12 +222,12 @@ public class EnhEightPuzzleBoard  extends State {
 	}
 
 	@Override
-	public Move getTransitionFromParent() {
+	public StateChange getTransitionFromParent() {
 		return transitionFromParent;
 	}
 
 	@Override
-	public void setTransitionFromParent(Move st) {
+	public void setTransitionFromParent(StateChange st) {
 		this.transitionFromParent = st;
 	}
 

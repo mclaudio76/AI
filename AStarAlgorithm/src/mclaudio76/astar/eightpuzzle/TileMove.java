@@ -1,8 +1,8 @@
 package mclaudio76.astar.eightpuzzle;
 
-import mclaudio76.astar.Move;
+import mclaudio76.astar.StateChange;
 
-public class TileMove extends Move {
+public class TileMove extends StateChange {
 	private Tile from;
 	private Tile to;
 	

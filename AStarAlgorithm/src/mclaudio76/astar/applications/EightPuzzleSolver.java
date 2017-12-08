@@ -4,7 +4,7 @@ import java.util.List;
 
 import mclaudio76.astar.AStarSolver;
 import mclaudio76.astar.Heuristic;
-import mclaudio76.astar.Move;
+import mclaudio76.astar.StateChange;
 import mclaudio76.astar.eightpuzzle.EnhEightPuzzleBoard;
 
 public class EightPuzzleSolver {
@@ -29,7 +29,7 @@ public class EightPuzzleSolver {
 			EnhEightPuzzleBoard start = EnhEightPuzzleBoard.generateRandomInitialState(goal, 100);
 			AStarSolver<EnhEightPuzzleBoard> solver 			   = new AStarSolver<EnhEightPuzzleBoard>(start, goal, h);
 			long startTime			   = System.currentTimeMillis();
-			List<Move> solution = solver.solve();
+			List<StateChange> solution = solver.solve();
 			long endTime			   = System.currentTimeMillis();
 			System.out.println("Solution found in "+solution.size()+" steps in "+(endTime-startTime)+" msec ");
 		}
