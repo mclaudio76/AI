@@ -17,7 +17,6 @@ public class EightTilesPuzzleBoard  extends State {
 		 this(t.innerData);
 	}
 	
-	
 	public EightTilesPuzzleBoard(int ... values) {
 		this.innerData = new  int[values.length];
 		this.boardSize = (int) Math.sqrt(values.length);
@@ -36,7 +35,6 @@ public class EightTilesPuzzleBoard  extends State {
 		});
 	}
 	
-	
 	public double manhattanDistance(EightTilesPuzzleBoard table) {
 		double dist = 0.0;
 		for(int index = 0; index < innerData.length; index++) {
@@ -49,8 +47,6 @@ public class EightTilesPuzzleBoard  extends State {
 		}
 		return dist;
 	}
-	
-	
 	
 	@Override
 	public State nextState(StateTransition t) {
@@ -65,7 +61,6 @@ public class EightTilesPuzzleBoard  extends State {
 	    return newState;
 	}
 
-
 	public String toString() {
  		StringBuffer sb = new StringBuffer();
  		for(int column = 0; column < this.boardSize; column++) {
@@ -78,7 +73,6 @@ public class EightTilesPuzzleBoard  extends State {
  		return sb.toString();
 	}
 
-	
 	private Tile getTileByIndex(int index) {
 		int x = index % boardSize;
 		int y = index / boardSize;
@@ -102,16 +96,12 @@ public class EightTilesPuzzleBoard  extends State {
 		innerData[x + y * boardSize] = value;
 	}
 	
-	
-
 	private Tile getTileAt(int x, int y) {
 		if (x < 0 || y < 0 || x >= boardSize || y >= boardSize) {
 			return null;
 		}
 		return new Tile(x,y, getValueAt(x,y));
 	}
-	
-	
 	
 	private Tile getTileByVal(int value) {
 		int index = 0;
@@ -123,9 +113,6 @@ public class EightTilesPuzzleBoard  extends State {
 		}
 		return null;
 	}
-	
-	
-
 
 	@Override
 	public List<StateTransition> potentialTransitions() {
@@ -150,13 +137,6 @@ public class EightTilesPuzzleBoard  extends State {
 		}
 		return potential;
 	}
-
-	/*@Override
-	public State copy() {
-		return new EightTilesPuzzleBoard(this);
-	} */
-	
-
 	
 	public static EightTilesPuzzleBoard generateRandomInitialState(EightTilesPuzzleBoard initialConfiguration, int r) {
 		EightTilesPuzzleBoard start = new EightTilesPuzzleBoard(initialConfiguration);
@@ -200,12 +180,6 @@ public class EightTilesPuzzleBoard  extends State {
 		return start;
 	}
 	
-	
-	
-	
-	
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -213,7 +187,6 @@ public class EightTilesPuzzleBoard  extends State {
 		result = prime * result + ((stringState == null) ? 0 : stringState.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -232,13 +205,9 @@ public class EightTilesPuzzleBoard  extends State {
 		return true;
 	}
 
-
 	@Override
 	public boolean goalAchieved(State goalState) {
 		return this.equals(goalState);
 	}
 
-
-	
-	
 }
