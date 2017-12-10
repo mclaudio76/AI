@@ -31,7 +31,9 @@ public class AStarSolver<S extends State> {
 		// Find root
 		State current =  solution;
 		while(current != null) {
-			steps.add(current.getTransitionFromOrigin());
+			if(current.getTransitionFromOrigin() != null) {
+				steps.add(current.getTransitionFromOrigin());	
+			}
 			current = current.getOrigin();
 		}
 		Collections.reverse(steps);

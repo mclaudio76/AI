@@ -9,14 +9,16 @@ import mclaudio76.astar.StateTransition;
 public class MazeSolver {
 
 	public static void main(String ... args) throws Exception {
-		Maze maze = new Maze("D://maze.txt");
-		Maze goal = new Maze(maze);
+		Maze maze = new Maze("D://maze2.txt");
 		Heuristic<Maze> h = (Maze a, Maze b) -> a.manhattanDistance(b);
-		AStarSolver<Maze> solver = new AStarSolver<Maze>(maze, goal, h);
+		AStarSolver<Maze> solver = new AStarSolver<Maze>(maze, new Maze(maze), h);
 		List<StateTransition> solution = solver.solve();
+		maze.cleanMoves();
 		if(solution != null) {
-			System.out.println("Maze solved");
+			 for(StateTransition s : solution) {
+				 maze = (Maze) maze.nextState(s);
+			 }
 		}
-		//maze.print();
+		maze.print();
 	}
 }

@@ -22,7 +22,7 @@ public class Point {
 	}
 	
 	public String toString() {
-		return "Pos = ("+x+","+y+")";
+		return "Pos = ("+(x+1)+","+(y+1)+")";
 	}
 
 	@Override

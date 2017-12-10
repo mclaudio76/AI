@@ -14,26 +14,25 @@ public class Maze extends State{
 
 	private char[][] board;
 	
-	private char START 	 = 'S';
-	private char GOAL	 = 'G';
-	private char WALL	 = '#';
-	private char BLACK   = '\u25A0';
+	private static final char START  = 'S';
+	private static final char GOAL	 = 'G';
+	private static final char WALL	 = '#';
+	private static final char POS	 = '*';
+	private static final char BLACK  = '\u25A0';
 	
 	private Point startPoint = null;
 	private Point goalPoint  = null;
 	private Point position   = null;
+	private int   xDimension = 0;
+	private int   yDimension = 0;
 	
 	public Maze(Maze another) {
 		this.startPoint  = new Point(another.startPoint);
 		this.goalPoint 	 = new Point(another.goalPoint);
 		this.position	 = new Point(another.position);
-		this.board		 = new char[another.board.length][];
-		int index		 = 0;
-		for(char[] c : another.board) {
-			this.board[index] = new char[c.length];
-			System.arraycopy(c, 0, this.board[index],0,c.length);
-			++index;
-		}
+		this.xDimension	 = another.xDimension;
+		this.yDimension  = another.yDimension;
+		this.board 		 = another.board;//new char[xDimension][yDimension];
 	}
 	
 	public Maze(String fileName) throws Exception {
@@ -43,16 +42,22 @@ public class Maze extends State{
 			do {
 				line = reader.readLine();
 				if(line != null) {
+					xDimension = line.toCharArray().length;
 					lines.add(line);
 				}
 			}while(line != null);
-			board = new char[lines.size()][];
+			yDimension = lines.size();
+			board = new char[xDimension][yDimension];
 			int index			  = 0;
 			for(String s: lines) {
-				board[index++] = s.toCharArray();
+				char array[] = s.toCharArray();
+				for(int x = 0; x < xDimension; x++) {
+					board[x][index] = array[x];
+				}
+				index++;
 			}
-			for(int x = 0; x < board.length; x++) {
-				for(int y = 0; y < board[x].length; y++) {
+			for(int x = 0; x < xDimension; x++) {
+				for(int y = 0; y < yDimension; y++) {
 					if(board[x][y] == START) {
 						this.startPoint = new Point(x,y);
 					}
@@ -72,11 +77,19 @@ public class Maze extends State{
 		return dist;
 	}
 	
+	public void cleanMoves() {
+		for(int x = 0; x < xDimension; x++) {
+			for(int y = 0; y < yDimension; y++) {
+				this.board[x][y] = this.board[x][y] == POS ? ' ' : this.board[x][y];
+			}
+		}
+	}
 	
 	public void print() {
-		for(char[] line : board) {
-			for(char c : line) {
-				System.out.print(c == WALL ? BLACK : c);
+		for(int y = 0; y < yDimension; y++) {
+			for(int x = 0; x < xDimension; x++) {
+				char val = board[x][y];
+				System.out.print(val == WALL ? BLACK : val);
 			}
 			System.out.println();
 		}
@@ -88,10 +101,13 @@ public class Maze extends State{
 		Maze newMaze	 = new Maze(this);
 		Move move	 	 = (Move) t;
 		newMaze.position = new Point(move.getTo());
-		System.out.println(newMaze.position);
+		char output = board[move.getTo().getX()][move.getTo().getY()];
+		newMaze.board[move.getTo().getX()][move.getTo().getY()] = output == GOAL || output == START ? output : POS;
 		return newMaze;
 	}
 
+	
+	
 	@Override
 	public List<StateTransition> potentialTransitions() {
 		ArrayList<StateTransition> moves = new ArrayList<>();
